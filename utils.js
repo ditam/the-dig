@@ -1,5 +1,5 @@
 export default {
-  asd: function() {
-    console.log('util hello');
+  getRandomItem: function (array) {
+    return array[Math.floor(Math.random() * array.length)];
   }
 }
