@@ -5,4 +5,18 @@ body {
 #main-wrapper {
   background-color: white;
   border: 1px solid gray;
+  position: relative;
+  background-image: url('assets/bg-3.png');
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.clipped {
+  clip-path: url(/#clip-1);
 }
