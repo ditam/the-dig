@@ -34,7 +34,7 @@ body {
 
 .worker {
   position: absolute;
-  width: 25px;
+  width: 25px; /* match constant! */
   height: 25px;
   background-color: rgb(50, 50, 150);
   border: 1px solid white;

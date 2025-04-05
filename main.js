@@ -15,6 +15,8 @@ function updateWorkerPosInDOM() {
 let wrapperEl;
 let workerEl;
 
+let workerTimeout;
+
 function generateGrid() {
   for (let i=0; i<constants.GRID_ROWS; i++) {
     const rowEl = $('<div>').addClass('row');
@@ -26,6 +28,10 @@ function generateGrid() {
     }
     wrapperEl.append(rowEl);
   }
+}
+
+function dig() {
+  console.log('--worker digging!--');
 }
 
 function start() {
@@ -53,6 +59,10 @@ $(document).ready(function() {
   wrapperEl.css('height', constants.HEIGHT);
 
   wrapperEl.on('click', '.cell', function() {
+    if (workerTimeout) {
+      console.log('--ignoring click: dig in progress--');
+      return;
+    }
     const cell = $(this);
     const row = cell.data('row');
     const col = cell.data('col');
@@ -61,6 +71,10 @@ $(document).ready(function() {
     worker.x = newX;
     worker.y = newY;
     updateWorkerPosInDOM();
+    workerTimeout = setTimeout(function() {
+      workerTimeout = null;
+      dig();
+    }, constants.WORKER_LOCK_TIME);
   });
   start();
 });
