@@ -30,25 +30,25 @@ function generateGrid() {
   }
 }
 
-function dig() {
+function dig(x, y) {
   console.log('--worker digging!--');
+  revealCell(x, y);
 }
 
 function start() {
   generateGrid();
   updateWorkerPosInDOM();
+}
 
-  setTimeout(function() {
-    const c1 = document.querySelector('svg #clip-1');
-
-    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    rect.setAttribute('x', '300');
-    rect.setAttribute('y', '200');
-    rect.setAttribute('width', '100');
-    rect.setAttribute('height', '100');
-
-    c1.appendChild(rect);
-  }, 2000);
+function revealCell(x, y) {
+  // TODO: keep track of what's revealed, do not add if already revealed
+  const c1 = document.querySelector('svg #clip-1');
+  const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  rect.setAttribute('x', x*constants.CELL_WIDTH);
+  rect.setAttribute('y', y*constants.CELL_HEIGHT);
+  rect.setAttribute('width', constants.CELL_WIDTH);
+  rect.setAttribute('height', constants.CELL_HEIGHT);
+  c1.appendChild(rect);
 }
 
 $(document).ready(function() {
@@ -73,7 +73,7 @@ $(document).ready(function() {
     updateWorkerPosInDOM();
     workerTimeout = setTimeout(function() {
       workerTimeout = null;
-      dig();
+      dig(col, row);
     }, constants.WORKER_LOCK_TIME);
   });
   start();
