@@ -2,11 +2,19 @@ body {
   background-color: #eee;
 }
 
+#game-area {
+  width: 1920px;
+  height: 1080px;
+  background-image: url('assets/bg-0.png');
+}
+
 #main-wrapper {
+  position: absolute;
+  left: 160px;
+  top: 160px;
+
   background-color: white;
   border: 1px solid gray;
-  position: relative;
-  background-image: url('assets/bg-3.png');
 }
 
 .bg {

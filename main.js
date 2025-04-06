@@ -12,7 +12,7 @@ function loadLevel(levelIndex) {
   let bgBeforeAsset;
   if (levelIndex === 0) {
     // we need special cases for bg-before:
-    bgBeforeAsset = 'assets/bg-1.png';
+    bgBeforeAsset = 'assets/bg-0.png';
   } else {
     bgBeforeAsset = levels[levelIndex-1].bgAsset;
     console.assert(bgBeforeAsset, 'No prev-level asset found for index ' + levelIndex);
@@ -74,7 +74,7 @@ function dig(x, y) {
       if (!map[i][j].digged) {
         revealCell(j, i);
         map[i][j].digged = true;
-        if (levels[currentLevel].resources[i][j]) {
+        if (levels[currentLevel].resources[i] && levels[currentLevel].resources[i][j]) {
           console.log('resource found at', i, j);
         }
       } else {
@@ -129,8 +129,8 @@ $(document).ready(function() {
   workerEl = $(document.getElementById('worker-1'));
 
   wrapperEl = $(document.getElementById('main-wrapper'));
-  wrapperEl.css('width', constants.WIDTH);
-  wrapperEl.css('height', constants.HEIGHT);
+  wrapperEl.css('width', constants.GRID_WIDTH);
+  wrapperEl.css('height', constants.GRID_HEIGHT);
 
   wrapperEl.on('click', '.cell', function() {
     if (workerTimeout) {
