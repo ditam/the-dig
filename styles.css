@@ -8,6 +8,39 @@ body {
   background-image: url('assets/bg-0.png');
 }
 
+#worker-list {
+  position: absolute;
+  left: 160px;
+  top: 40px;
+  height: 120px;
+}
+
+#worker-list .worker {
+  display: inline-block;
+  width: 64px;
+  height: 120px;
+  border-radius: 3px;
+  margin-right: 25px;
+  cursor: pointer;
+}
+
+#worker-list .portrait {
+  width: 64px;
+  height: 96px;
+  background-size: contain;
+  background-color: #8c5151;
+}
+#worker-list .label {
+  line-height: 20px;
+  font-size: 16px;
+  text-align: center;
+  color: black;
+}
+
+#worker-list .worker.active .label {
+  background-color: rgb(50, 50, 150);
+}
+
 #main-wrapper {
   position: absolute;
   left: 160px;
@@ -40,13 +73,19 @@ body {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.worker {
+.worker-marker {
   position: absolute;
   width: 25px; /* match constant! */
   height: 25px;
-  background-color: rgb(50, 50, 150);
+  background-color: rgb(79, 57, 39);
   border: 1px solid white;
   border-radius: 15px;
 
-  transition: all 2s ease-in-out;
+  transition-property: top, left;
+  transition-duration: 2s;
+  transition-timing-function: ease-in-out;
+}
+
+.worker-marker.active {
+  background-color: rgb(50, 50, 150);
 }

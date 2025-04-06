@@ -2,10 +2,60 @@ import utils from '/utils.js';
 import constants from '/constants.js';
 import levels from '/levels.js';
 
-const worker = {
-  x: 500,
-  y: 240
-};
+const workers = [
+  {
+    x: 500,
+    y: 240,
+    name: 'Areem',
+    asset: 'assets/worker-1.png',
+  },
+  {
+    x: 600,
+    y: 240,
+    name: 'Sanil',
+    asset: 'assets/worker-2.png',
+  },
+  {
+    x: 700,
+    y: 240,
+    name: 'Hork',
+    asset: 'assets/worker-3.png',
+  },
+];
+
+let activeWorker = 0;
+(function renderWorkerPortraits() {
+  const container = $('#worker-list');
+  container.empty();
+  workers.forEach((w, i) => {
+    const worker = $('<div>').addClass('worker');
+    if (w.el) {
+      w.el.removeClass('active');
+    }
+    if (i === activeWorker) {
+      worker.addClass('active');
+      if (w.el) {
+        w.el.addClass('active');
+      }
+    }
+    const portrait = $('<div>').addClass('portrait').css('background-image', `url(${w.asset})`);
+    const label = $('<div>').addClass('label').text(w.name);
+    worker.append(portrait).append(label);
+    worker.appendTo(container);
+
+    worker.on('click', function() {
+      const selectedWorker = $(this);
+      if (!selectedWorker.hasClass('active')) {
+        activeWorker = selectedWorker.index();
+        console.log('new activeWorker:', activeWorker);
+        container.find('.worker').removeClass('active');
+        wrapperEl.find('.worker-marker').removeClass('active');
+        workers[activeWorker].el.addClass('active');
+        selectedWorker.addClass('active');
+      }
+    });
+  });
+})();
 
 let currentLevel = 0;
 function loadLevel(levelIndex) {
@@ -33,13 +83,14 @@ function loadLevel(levelIndex) {
 }
 
 function updateWorkerPosInDOM() {
-  // moves the worker in DOM to its current position, animated with CSS transitions
-  workerEl.css('left', worker.x);
-  workerEl.css('top',  worker.y);
+  // moves the workers in DOM to their current position, animated with CSS transitions
+  workers.forEach(w => {
+    w.el.css('left', w.x);
+    w.el.css('top', w.y);
+  });
 }
 
 let wrapperEl;
-let workerEl;
 
 let workerTimeout;
 
@@ -126,15 +177,18 @@ function revealCell(x, y) {
 }
 
 $(document).ready(function() {
-  workerEl = $(document.getElementById('worker-1'));
+  workers[0].el = $(document.getElementById('worker-1'));
+  workers[0].el.addClass('active');
+  workers[1].el = $(document.getElementById('worker-2'));
+  workers[2].el = $(document.getElementById('worker-3'));
 
   wrapperEl = $(document.getElementById('main-wrapper'));
   wrapperEl.css('width', constants.GRID_WIDTH);
   wrapperEl.css('height', constants.GRID_HEIGHT);
 
   wrapperEl.on('click', '.cell', function() {
-    if (workerTimeout) {
-      console.log('--ignoring click: dig in progress--');
+    if (workers[activeWorker].timeout) {
+      console.log(`--ignoring click for worker ${activeWorker}: dig in progress--`);
       return;
     }
     const cell = $(this);
@@ -142,11 +196,11 @@ $(document).ready(function() {
     const col = cell.data('col');
     const newX = constants.CELL_WIDTH * col + constants.CELL_WIDTH/2 - constants.WORKER_SIZE/2;
     const newY = constants.CELL_HEIGHT * row + constants.CELL_HEIGHT/2 - constants.WORKER_SIZE/2;
-    worker.x = newX;
-    worker.y = newY;
+    workers[activeWorker].x = newX;
+    workers[activeWorker].y = newY;
     updateWorkerPosInDOM();
-    workerTimeout = setTimeout(function() {
-      workerTimeout = null;
+    workers[activeWorker].timeout = setTimeout(function() {
+      workers[activeWorker].timeout = null;
       dig(col, row);
     }, constants.WORKER_LOCK_TIME);
   });
