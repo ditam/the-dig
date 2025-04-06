@@ -2,11 +2,35 @@ import utils from '/utils.js';
 import constants from '/constants.js';
 import levels from '/levels.js';
 
-let currentLevel = 0;
 const worker = {
   x: 500,
   y: 240
 };
+
+let currentLevel = 0;
+function loadLevel(levelIndex) {
+  let bgBeforeAsset;
+  if (levelIndex === 0) {
+    // we need special cases for bg-before:
+    bgBeforeAsset = 'assets/bg-1.png';
+  } else {
+    bgBeforeAsset = levels[levelIndex-1].bgAsset;
+    console.assert(bgBeforeAsset, 'No prev-level asset found for index ' + levelIndex);
+  }
+
+  const currentBg = levels[levelIndex].bgAsset;
+  console.assert(bgBeforeAsset, 'No current level asset found for index ' + levelIndex);
+
+  // replace img sources
+  $('#bg-before').attr('src', bgBeforeAsset);
+  $('#bg-after').attr('src', levels[currentLevel].bgAsset);
+
+  // reset SVG clipping mask to empty
+  const clipPath = document.querySelector('svg #clip-1');
+  while (clipPath.firstChild) {
+    clipPath.removeChild(clipPath.firstChild);
+  }
+}
 
 function updateWorkerPosInDOM() {
   // moves the worker in DOM to its current position, animated with CSS transitions
@@ -73,7 +97,8 @@ function checkLevelEnd() {
   if (cellCountDigged === cellCountTotal) {
     console.log('===Level end===');
     resetDigMap();
-    // TODO: empty SVG and swap levels
+    currentLevel++;
+    loadLevel(currentLevel);
   }
 }
 
@@ -85,19 +110,19 @@ function resetDigMap() {
 }
 
 function start() {
+  loadLevel(currentLevel);
   generateGrid();
   updateWorkerPosInDOM();
 }
 
 function revealCell(x, y) {
-  // TODO: keep track of what's revealed, do not add if already revealed
-  const c1 = document.querySelector('svg #clip-1');
+  const clipPath = document.querySelector('svg #clip-1');
   const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
   rect.setAttribute('x', x*constants.CELL_WIDTH);
   rect.setAttribute('y', y*constants.CELL_HEIGHT);
   rect.setAttribute('width', constants.CELL_WIDTH);
   rect.setAttribute('height', constants.CELL_HEIGHT);
-  c1.appendChild(rect);
+  clipPath.appendChild(rect);
 }
 
 $(document).ready(function() {
