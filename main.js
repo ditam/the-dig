@@ -43,19 +43,40 @@ const map = [];
 
 function dig(x, y) {
   console.log('--worker digging!--');
-  for (let i=0; i<constants.GRID_ROWS; i++) {
-    for (let j=0; j<constants.GRID_COLS; j++) {
-      if (Math.abs(x-j)+Math.abs(y-i) < constants.WORKER_EFFECT_RADIUS) {
-        if (!map[i][j].digged) {
-          revealCell(j, i);
-          map[i][j].digged = true;
-        } else {
-          console.log(j, i, 'already digged');
-          utils.noop();
-        }
+  utils.forEachCoord(function(j, i) {
+    if (Math.abs(x-j)+Math.abs(y-i) < constants.WORKER_EFFECT_RADIUS) {
+      if (!map[i][j].digged) {
+        revealCell(j, i);
+        map[i][j].digged = true;
+      } else {
+        console.log(j, i, 'already digged');
+        utils.noop();
       }
     }
+  });
+  checkLevelEnd();
+}
+
+function checkLevelEnd() {
+  const cellCountTotal = constants.GRID_ROWS * constants.GRID_COLS;
+  let cellCountDigged = 0;
+  utils.forEachCoord((x, y) => {
+    if (map[y][x].digged) {
+      cellCountDigged++;
+    }
+  });
+  if (cellCountDigged === cellCountTotal) {
+    console.log('===Level end===');
+    resetDigMap();
+    // TODO: empty SVG and swap levels
   }
+}
+
+function resetDigMap() {
+  // NB: does not do anything else, clip mask needs updating still
+  utils.forEachCoord((x, y) => {
+    map[y][x].digged = false;
+  });
 }
 
 function start() {
