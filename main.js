@@ -125,9 +125,7 @@ function dig(x, y) {
       if (!map[i][j].digged) {
         revealCell(j, i);
         map[i][j].digged = true;
-        if (levels[currentLevel].resources[i] && levels[currentLevel].resources[i][j]) {
-          console.log('resource found at', i, j);
-        }
+        // TODO: random resource generation with visual feedback
       } else {
         console.log(j, i, 'already digged');
         utils.noop();
