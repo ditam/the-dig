@@ -1,6 +1,8 @@
 import utils from '/utils.js';
 import constants from '/constants.js';
+import levels from '/levels.js';
 
+let currentLevel = 0;
 const worker = {
   x: 500,
   y: 240
@@ -48,6 +50,9 @@ function dig(x, y) {
       if (!map[i][j].digged) {
         revealCell(j, i);
         map[i][j].digged = true;
+        if (levels[currentLevel].resources[i][j]) {
+          console.log('resource found at', i, j);
+        }
       } else {
         console.log(j, i, 'already digged');
         utils.noop();
