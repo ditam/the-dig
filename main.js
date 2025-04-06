@@ -7,7 +7,7 @@ const worker = {
 };
 
 function updateWorkerPosInDOM() {
-  // moves the worker in DOM to its current position
+  // moves the worker in DOM to its current position, animated with CSS transitions
   workerEl.css('left', worker.x);
   workerEl.css('top',  worker.y);
 }
@@ -30,9 +30,32 @@ function generateGrid() {
   }
 }
 
+const map = [];
+(function generateDigMap() {
+  for (let i=0; i<constants.GRID_ROWS; i++) {
+    const row = [];
+    for (let j=0; j<constants.GRID_COLS; j++) {
+      row.push({digged: false});
+    }
+    map.push(row);
+  }
+})();
+
 function dig(x, y) {
   console.log('--worker digging!--');
-  revealCell(x, y);
+  for (let i=0; i<constants.GRID_ROWS; i++) {
+    for (let j=0; j<constants.GRID_COLS; j++) {
+      if (Math.abs(x-j)+Math.abs(y-i) < constants.WORKER_EFFECT_RADIUS) {
+        if (!map[i][j].digged) {
+          revealCell(j, i);
+          map[i][j].digged = true;
+        } else {
+          console.log(j, i, 'already digged');
+          utils.noop();
+        }
+      }
+    }
+  }
 }
 
 function start() {
