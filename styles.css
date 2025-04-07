@@ -1,5 +1,6 @@
 body {
   background-color: #eee;
+  user-select: none;
 }
 
 #game-area {
