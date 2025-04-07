@@ -83,7 +83,10 @@ function loadLevel(levelIndex) {
 
   // call custom level effects if any
   if (levels[levelIndex].onLoad) {
-    levels[levelIndex].onLoad();
+    levels[levelIndex].onLoad({
+      humSound: humSound,
+      songs: songs,
+    });
   }
 
   // TODO: when moving backwards (ie. resetting), remove custom effect classes
@@ -182,7 +185,21 @@ function revealCell(x, y) {
   clipPath.appendChild(rect);
 }
 
+let songs, sounds, humSound;
+
 $(document).ready(function() {
+  songs = [
+    new Audio('assets/bgMusic1.mp3'),
+    new Audio('assets/bgMusic2.mp3'),
+    new Audio('assets/bgMusic3.mp3')
+  ];
+
+  humSound = new Audio('assets/hum.mp3');
+  humSound.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+  }, false);
+
   workers[0].el = $(document.getElementById('worker-1'));
   workers[0].el.addClass('active');
   workers[1].el = $(document.getElementById('worker-2'));
@@ -193,6 +210,17 @@ $(document).ready(function() {
   wrapperEl.css('height', constants.GRID_HEIGHT);
 
   wrapperEl.on('click', '.cell', function() {
+    // TODO: use splash screen
+    songs[0].play();
+    songs[0].addEventListener('ended', function() {
+      this.pause();
+      songs[1].play();
+      songs[1].addEventListener('ended', function() {
+        songs[1].currentTime = 0;
+        songs[1].play();
+      }, false);
+    }, false);
+
     if (workers[activeWorker].timeout) {
       console.log(`--ignoring click for worker ${activeWorker}: dig in progress--`);
       return;

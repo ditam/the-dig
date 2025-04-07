@@ -12,17 +12,40 @@ const levels = [
     bgAsset: 'assets/bg-3.png',
   },
   {
-    onLoad: () => {
+    onLoad: (context) => {
       $('#game-area').addClass('darkened');
+      if (context.humSound) {
+        context.humSound.volume = 0.3;
+        context.humSound.play();
+      }
     },
     bgAsset: 'assets/bg-4.png',
   },
   {
+    onLoad: (context) => {
+      $('#game-area').addClass('darkened');
+      if (context.humSound) {
+        context.humSound.volume = 0.4;
+      }
+    },
     bgAsset: 'assets/bg-5.png',
   },
   {
-    onLoad: () => {
+    onLoad: (context) => {
       $('#game-area').removeClass('darkened').addClass('darkened-2');
+      if (context.humSound) {
+        context.humSound.volume = 0.5;
+      }
+      if (context.songs) {
+        context.songs[0].pause();
+        context.songs[1].pause();
+        const lastSong = context.songs[2];
+        lastSong.play();
+        lastSong.addEventListener('ended', function() {
+          lastSong.currentTime = 0;
+          lastSong.play();
+        }, false);
+      }
     },
     bgAsset: 'assets/bg-6.png',
   },
