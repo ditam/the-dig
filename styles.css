@@ -101,3 +101,37 @@ body {
 .worker-marker.active {
   background-color: rgb(50, 50, 150);
 }
+
+.tentacle {
+  position: absolute;
+  left: 200px;
+  top: 200px;
+  width: 64px;
+  height: 64px;
+  background: url(assets/tent1.png) left center;
+  background-size: 512px 64px;
+  animation: play 3s steps(8);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes play {
+  100% { background-position: -512px; }
+}
+
+.tentacle-big {
+  position: absolute;
+  left: 746px;
+  top: 312px;
+  /* FIXME: these are stupid content-scaled values, fix on 1:1 screen... */
+  width: 333.33px;
+  height: 266.67px;
+  background: url(assets/tent2.png);
+  background-size: 1333.333px 266.67px;
+  animation: play-big 3s steps(3);
+  animation-fill-mode: forwards;
+}
+
+@keyframes play-big {
+  100% { background-position: -1000px; }
+}
