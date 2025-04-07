@@ -2,6 +2,7 @@ import constants from '/constants.js';
 
 const levels = [
   {
+    // bgAsset is the image that's revealed after digging on this level
     bgAsset: 'assets/bg-1.png',
   },
   {

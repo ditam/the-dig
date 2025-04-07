@@ -62,18 +62,18 @@ function loadLevel(levelIndex) {
   let bgBeforeAsset;
   if (levelIndex === 0) {
     // we need special cases for bg-before:
-    bgBeforeAsset = 'assets/bg-0.png';
+    bgBeforeAsset = 'assets/bg-0-cut.png';
   } else {
     bgBeforeAsset = levels[levelIndex-1].bgAsset;
     console.assert(bgBeforeAsset, 'No prev-level asset found for index ' + levelIndex);
   }
 
   const currentBg = levels[levelIndex].bgAsset;
-  console.assert(bgBeforeAsset, 'No current level asset found for index ' + levelIndex);
+  console.assert(currentBg, 'No current level asset found for index ' + levelIndex);
 
   // replace img sources
   $('#bg-before').attr('src', bgBeforeAsset);
-  $('#bg-after').attr('src', levels[currentLevel].bgAsset);
+  $('#bg-after').attr('src', currentBg);
 
   // reset SVG clipping mask to empty
   const clipPath = document.querySelector('svg #clip-1');
@@ -91,8 +91,6 @@ function updateWorkerPosInDOM() {
 }
 
 let wrapperEl;
-
-let workerTimeout;
 
 function generateGrid() {
   for (let i=0; i<constants.GRID_ROWS; i++) {
