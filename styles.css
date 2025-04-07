@@ -8,6 +8,18 @@ body {
   background-image: url('assets/bg-0.png');
 }
 
+/* this is a hack to darken the BG without the rest of the content */
+#game-area.darkened{ /* matches level 4 bg */
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)),
+    url(assets/bg-0.png);
+}
+#game-area.darkened-2 {
+  background-image: /* matches level 6 bg */
+    linear-gradient(rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.32)),
+    url(assets/bg-0.png);
+}
+
 #worker-list {
   position: absolute;
   left: 160px;

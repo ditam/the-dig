@@ -12,12 +12,18 @@ const levels = [
     bgAsset: 'assets/bg-3.png',
   },
   {
+    onLoad: () => {
+      $('#game-area').addClass('darkened');
+    },
     bgAsset: 'assets/bg-4.png',
   },
   {
     bgAsset: 'assets/bg-5.png',
   },
   {
+    onLoad: () => {
+      $('#game-area').removeClass('darkened').addClass('darkened-2');
+    },
     bgAsset: 'assets/bg-6.png',
   },
 ];

@@ -80,7 +80,17 @@ function loadLevel(levelIndex) {
   while (clipPath.firstChild) {
     clipPath.removeChild(clipPath.firstChild);
   }
+
+  // call custom level effects if any
+  if (levels[levelIndex].onLoad) {
+    levels[levelIndex].onLoad();
+  }
+
+  // TODO: when moving backwards (ie. resetting), remove custom effect classes
 }
+
+// DEBUG:
+window.loadLevel = loadLevel;
 
 function updateWorkerPosInDOM() {
   // moves the workers in DOM to their current position, animated with CSS transitions
