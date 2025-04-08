@@ -10,14 +10,14 @@ const workers = [
     asset: 'assets/worker-1.png',
   },
   {
-    x: 600,
-    y: 240,
+    x: 100,
+    y: 750,
     name: 'Sanil',
     asset: 'assets/worker-2.png',
   },
   {
-    x: 700,
-    y: 240,
+    x: 50,
+    y: 800,
     name: 'Hork',
     asset: 'assets/worker-3.png',
   },
@@ -92,7 +92,9 @@ function loadLevel(levelIndex) {
   // display story dialog
   storyDialog.find('#msg').text(levels[levelIndex].storyText);
   storyDialog.show();
-
+  if (levelIndex < 2) {
+    storyDialog.find('#end-button').hide();
+  }
 
   // TODO: when moving backwards (ie. resetting), remove custom effect classes
 }
@@ -160,7 +162,7 @@ function checkLevelEnd() {
       cellCountDigged++;
     }
   });
-  if (cellCountDigged === cellCountTotal) {
+  if (cellCountDigged > cellCountTotal*0.6) {
     console.log('===Level end===');
     resetDigMap();
     currentLevel++;
@@ -232,8 +234,12 @@ $(document).ready(function() {
   });
   storyDialog.on('click', '#end-button', function() {
     storyDialog.hide();
-    // TODO
-    console.log('ENDGAME scoring');
+    const endDialog = $('<div>').appendTo($('#game-area')).addClass('end-dialog');
+    $('<div>').addClass('end-msg').text(
+      'You\'ve abandoned the dig site. Cowardly, but safe.'
+    ).appendTo(endDialog);
+    // TODO: restart
+    // TODO: endgame scoring based on levels or resources
   });
 
   let audioStarted = false;
