@@ -166,6 +166,7 @@ function dig(x, y) {
   checkLevelEnd();
 }
 
+let gameEnded = false;
 function checkLevelEnd() {
   const cellCountTotal = constants.GRID_ROWS * constants.GRID_COLS;
   let cellCountDigged = 0;
@@ -175,7 +176,8 @@ function checkLevelEnd() {
     }
   });
   if (cellCountDigged > cellCountTotal*0.6) {
-    if (currentLevel === 5) {
+    if (currentLevel === 5 && !gameEnded) {
+      gameEnded = true;
       console.log('ending game');
 
       $('#bg-after').removeClass('clipped');
@@ -198,7 +200,7 @@ function checkLevelEnd() {
       setTimeout(function() {
         $('<div>').addClass('end-subtitle').text('A Ludum Dare 57 entry by ditam').appendTo(endDialog);
       }, 17000);
-    } else {
+    } else if (!gameEnded) {
       console.log('===Level end===');
       resetDigMap();
       currentLevel++;
