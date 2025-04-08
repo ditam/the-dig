@@ -1,6 +1,10 @@
 body {
   background-color: #eee;
   user-select: none;
+
+  font-family: "Federo", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 #game-area {
@@ -135,3 +139,48 @@ body {
 @keyframes play-big {
   100% { background-position: -1000px; }
 }
+
+#story-dialog {
+  border: 2px solid brown;
+  background-color: #c3b28b;
+  border-radius: 5px;
+  position: absolute;
+  width: 1280px;
+  top: 800px;
+  left: 320px;
+  font-size: 36px;
+  padding: 12px;
+  line-height: 42px;
+}
+
+#story-dialog #portrait {
+  position: absolute;
+  top: -302px;
+  right: 0;
+  margin: 25px;
+  border: 1px solid brown;
+  border-radius: 5px;
+  background-color: yellow;
+}
+
+#story-dialog #portrait img {
+  height: 275px;
+  image-rendering: pixelated;
+}
+
+#choices {
+  text-align: right;
+  line-height: 16px;
+  margin: 2px;
+}
+
+#choices div {
+  display: inline-block;
+  padding: 16px;
+}
+
+#choices div:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+

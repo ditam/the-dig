@@ -89,6 +89,11 @@ function loadLevel(levelIndex) {
     });
   }
 
+  // display story dialog
+  storyDialog.find('#msg').text(levels[levelIndex].storyText);
+  storyDialog.show();
+
+
   // TODO: when moving backwards (ie. resetting), remove custom effect classes
 }
 
@@ -103,7 +108,7 @@ function updateWorkerPosInDOM() {
   });
 }
 
-let wrapperEl;
+let wrapperEl, storyDialog;
 
 function generateGrid() {
   for (let i=0; i<constants.GRID_ROWS; i++) {
@@ -221,6 +226,16 @@ $(document).ready(function() {
   wrapperEl.css('width', constants.GRID_WIDTH);
   wrapperEl.css('height', constants.GRID_HEIGHT);
 
+  storyDialog = $(document.getElementById('story-dialog'));
+  storyDialog.on('click', '#continue-button', function() {
+    storyDialog.hide();
+  });
+  storyDialog.on('click', '#end-button', function() {
+    storyDialog.hide();
+    // TODO
+    console.log('ENDGAME scoring');
+  });
+
   let audioStarted = false;
   wrapperEl.on('click', '.cell', function() {
     // TODO: use splash screen
@@ -238,6 +253,11 @@ $(document).ready(function() {
       audioStarted = true;
     }
 
+    if (storyDialog.is(':visible')) {
+      errorSound.play();
+      console.log(`--ignoring click for worker ${activeWorker}: story dialog is open--`);
+      return;
+    }
     if (workers[activeWorker].timeout) {
       errorSound.play();
       console.log(`--ignoring click for worker ${activeWorker}: dig in progress--`);

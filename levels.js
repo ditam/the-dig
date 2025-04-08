@@ -73,5 +73,8 @@ const storyTexts = [
   ),
 ];
 console.assert(levels.length === storyTexts.length);
+levels.forEach((l, i) => {
+  l.storyText = storyTexts[i];
+});
 
 export default levels;
