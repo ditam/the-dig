@@ -303,9 +303,11 @@ $(document).ready(function() {
       console.log(`--ignoring click for worker ${activeWorker}: story dialog is open--`);
       return;
     }
-    if (workers[activeWorker].timeout) {
+
+    const activeWorkerObj = workers[activeWorker];
+    if (activeWorkerObj.timeout) {
       errorSound.play();
-      console.log(`--ignoring click for worker ${activeWorker}: dig in progress--`);
+      console.log(`--ignoring click for worker ${activeWorkerObj.name}: dig in progress--`);
       return;
     }
     clickSound.play();
@@ -314,11 +316,12 @@ $(document).ready(function() {
     const col = cell.data('col');
     const newX = constants.CELL_WIDTH * col + constants.CELL_WIDTH/2 - constants.WORKER_SIZE/2;
     const newY = constants.CELL_HEIGHT * row + constants.CELL_HEIGHT/2 - constants.WORKER_SIZE/2;
-    workers[activeWorker].x = newX;
-    workers[activeWorker].y = newY;
+    activeWorkerObj.x = newX;
+    activeWorkerObj.y = newY;
     updateWorkerPosInDOM();
-    workers[activeWorker].timeout = setTimeout(function() {
-      workers[activeWorker].timeout = null;
+    activeWorkerObj.timeout = setTimeout(function() {
+      // FIXME: workers still dig if they are en route during level change
+      activeWorkerObj.timeout = null;
       dig(col, row);
     }, constants.WORKER_LOCK_TIME);
   });
