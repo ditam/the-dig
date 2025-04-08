@@ -131,6 +131,7 @@ const map = [];
 
 function dig(x, y) {
   console.log('--worker digging!--');
+  digSound.play();
   utils.forEachCoord(function(j, i) {
     if (Math.abs(x-j)+Math.abs(y-i) < constants.WORKER_EFFECT_RADIUS) {
       if (!map[i][j].digged) {
@@ -186,12 +187,23 @@ function revealCell(x, y) {
 }
 
 let songs, sounds, humSound;
+let clickSound, digSound, errorSound;
 
 $(document).ready(function() {
   songs = [
     new Audio('assets/bgMusic1.mp3'),
     new Audio('assets/bgMusic2.mp3'),
     new Audio('assets/bgMusic3.mp3')
+  ];
+
+  clickSound = new Audio('assets/sound_click.mp3'),
+  digSound   = new Audio('assets/sound_dig.mp3'),
+  errorSound = new Audio('assets/sound_negative.mp3'),
+
+  sounds = [
+    clickSound,
+    digSound,
+    errorSound,
   ];
 
   humSound = new Audio('assets/hum.mp3');
@@ -209,22 +221,29 @@ $(document).ready(function() {
   wrapperEl.css('width', constants.GRID_WIDTH);
   wrapperEl.css('height', constants.GRID_HEIGHT);
 
+  let audioStarted = false;
   wrapperEl.on('click', '.cell', function() {
     // TODO: use splash screen
-    songs[0].play();
-    songs[0].addEventListener('ended', function() {
-      this.pause();
-      songs[1].play();
-      songs[1].addEventListener('ended', function() {
-        songs[1].currentTime = 0;
+
+    if (!audioStarted) {
+      songs[0].play();
+      songs[0].addEventListener('ended', function() {
+        this.pause();
         songs[1].play();
+        songs[1].addEventListener('ended', function() {
+          songs[1].currentTime = 0;
+          songs[1].play();
+        }, false);
       }, false);
-    }, false);
+      audioStarted = true;
+    }
 
     if (workers[activeWorker].timeout) {
+      errorSound.play();
       console.log(`--ignoring click for worker ${activeWorker}: dig in progress--`);
       return;
     }
+    clickSound.play();
     const cell = $(this);
     const row = cell.data('row');
     const col = cell.data('col');
