@@ -1,6 +1,6 @@
-import utils from '/utils.js';
-import constants from '/constants.js';
-import levels from '/levels.js';
+import utils from './utils.js';
+import constants from './constants.js';
+import levels from './levels.js';
 
 const workers = [
   {
