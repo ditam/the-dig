@@ -119,19 +119,19 @@ body {
 }
 
 .tentacle.t1 {
-  left: 423px;
-  top: 803px;
+  left: 263px;
+  top: 643px;
 }
 
 .tentacle.t2 {
-  left: 1080px;
-  top: 720px;
+  left: 920px;
+  top: 560px;
   rotate: 70deg;
 }
 
 .tentacle.t3 {
-  left: 1160px;
-  top: 218px;
+  left: 1000px;
+  top: 58px;
   rotate: 195deg;
 }
 
@@ -141,8 +141,8 @@ body {
 
 .tentacle-big {
   position: absolute;
-  left: 746px;
-  top: 312px;
+  left: 586px;
+  top: 152px;
   /* FIXME: these are stupid content-scaled values, fix on 1:1 screen... */
   width: 333.33px;
   height: 266.67px;
@@ -225,6 +225,6 @@ body {
 
 .end-dialog .end-subtitle {
   text-align: center;
-  padding-top: 700px;
+  padding-top: 100px;
   font-size: 32px;
 }

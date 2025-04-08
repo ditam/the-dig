@@ -108,7 +108,10 @@ function loadLevel(levelIndex) {
 }
 
 // DEBUG:
-window.loadLevel = loadLevel;
+window.loadLevel = function(levelIndex) {
+  currentLevel = levelIndex;
+  loadLevel(currentLevel);
+};
 
 function updateWorkerPosInDOM() {
   // moves the workers in DOM to their current position, animated with CSS transitions
@@ -191,7 +194,7 @@ function checkLevelEnd() {
       }, 7000);
       setTimeout(function() {
         $('<div>').addClass('end-subtitle').text('A Ludum Dare 57 entry by ditam').appendTo(endDialog);
-      }, 9000);
+      }, 17000);
     } else {
       console.log('===Level end===');
       resetDigMap();
