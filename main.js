@@ -91,6 +91,7 @@ function loadLevel(levelIndex) {
     levels[levelIndex].onLoad({
       humSound: humSound,
       songs: songs,
+      workers: workers,
       updateWorkers: renderWorkerPortraits,
     });
   }
@@ -177,6 +178,8 @@ function checkLevelEnd() {
     if (currentLevel === 5) {
       console.log('ending game');
 
+      $('#bg-after').removeClass('clipped');
+
       $('<div>').addClass('tentacle t1').appendTo(wrapperEl);
       $('<div>').addClass('tentacle t2').appendTo(wrapperEl);
       $('<div>').addClass('tentacle t3').appendTo(wrapperEl);
@@ -191,7 +194,7 @@ function checkLevelEnd() {
       setTimeout(function() {
         endDialog.appendTo($('#game-area'));
         $('<div>').addClass('end-title').text('The Dig').appendTo(endDialog);
-      }, 7000);
+      }, 9000);
       setTimeout(function() {
         $('<div>').addClass('end-subtitle').text('A Ludum Dare 57 entry by ditam').appendTo(endDialog);
       }, 17000);

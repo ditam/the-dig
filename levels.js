@@ -20,6 +20,7 @@ const levels = [
       }
       if (context.workers) {
         context.workers[2].dead = true;
+        $('#worker-3').remove();
         context.updateWorkers();
       }
     },
