@@ -24,7 +24,7 @@ const workers = [
 ];
 
 let activeWorker = 0;
-(function renderWorkerPortraits() {
+function renderWorkerPortraits() {
   const container = $('#worker-list');
   container.empty();
   workers.forEach((w, i) => {
@@ -58,7 +58,9 @@ let activeWorker = 0;
       }
     });
   });
-})();
+}
+
+renderWorkerPortraits();
 
 let currentLevel = 0;
 function loadLevel(levelIndex) {
@@ -176,6 +178,7 @@ function checkLevelEnd() {
       $('<div>').addClass('tentacle t2').appendTo(wrapperEl);
       $('<div>').addClass('tentacle t3').appendTo(wrapperEl);
 
+      const endDialog = $('<div>').addClass('end-dialog');
       setTimeout(function() {
         $('<div>').addClass('tentacle-big').appendTo(wrapperEl);
       }, 3000);
@@ -183,7 +186,7 @@ function checkLevelEnd() {
         screamSound.play();
       }, 5000);
       setTimeout(function() {
-        const endDialog = $('<div>').appendTo($('#game-area')).addClass('end-dialog');
+        endDialog.appendTo($('#game-area'));
         $('<div>').addClass('end-title').text('The Dig').appendTo(endDialog);
       }, 7000);
       setTimeout(function() {
@@ -231,9 +234,10 @@ $(document).ready(function() {
     new Audio('assets/bgMusic3.mp3')
   ];
 
-  clickSound = new Audio('assets/sound_click.mp3'),
-  digSound   = new Audio('assets/sound_dig.mp3'),
-  errorSound = new Audio('assets/sound_negative.mp3'),
+  clickSound  = new Audio('assets/sound_click.mp3');
+  digSound    = new Audio('assets/sound_dig.mp3');
+  errorSound  = new Audio('assets/sound_negative.mp3');
+  screamSound = new Audio('assets/scream.mp3');
 
   sounds = [
     clickSound,
