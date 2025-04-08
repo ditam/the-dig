@@ -18,6 +18,10 @@ const levels = [
         context.humSound.volume = 0.3;
         context.humSound.play();
       }
+      if (context.workers) {
+        context.workers[2].dead = true;
+        context.updateWorkers();
+      }
     },
     bgAsset: 'assets/bg-4.png',
   },

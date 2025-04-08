@@ -109,8 +109,6 @@ body {
 
 .tentacle {
   position: absolute;
-  left: 200px;
-  top: 200px;
   width: 64px;
   height: 64px;
   background: url(assets/tent1.png) left center;
@@ -118,6 +116,23 @@ body {
   animation: play 3s steps(8);
   animation-iteration-count: infinite;
   animation-direction: alternate;
+}
+
+.tentacle.t1 {
+  left: 423px;
+  top: 803px;
+}
+
+.tentacle.t2 {
+  left: 1080px;
+  top: 720px;
+  rotate: 70deg;
+}
+
+.tentacle.t3 {
+  left: 1160px;
+  top: 218px;
+  rotate: 195deg;
 }
 
 @keyframes play {
@@ -199,5 +214,17 @@ body {
 .end-dialog .end-msg {
   text-align: center;
   line-height: 1080px;
+  font-size: 32px;
+}
+
+.end-dialog .end-title {
+  text-align: center;
+  padding-top: 400px;
+  font-size: 128px;
+}
+
+.end-dialog .end-subtitle {
+  text-align: center;
+  padding-top: 700px;
   font-size: 32px;
 }

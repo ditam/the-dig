@@ -28,6 +28,9 @@ let activeWorker = 0;
   const container = $('#worker-list');
   container.empty();
   workers.forEach((w, i) => {
+    if (w.dead) {
+      return;
+    }
     const worker = $('<div>').addClass('worker');
     if (w.el) {
       w.el.removeClass('active');
@@ -86,6 +89,7 @@ function loadLevel(levelIndex) {
     levels[levelIndex].onLoad({
       humSound: humSound,
       songs: songs,
+      updateWorkers: renderWorkerPortraits,
     });
   }
 
@@ -94,6 +98,8 @@ function loadLevel(levelIndex) {
   storyDialog.show();
   if (levelIndex < 2) {
     storyDialog.find('#end-button').hide();
+  } else {
+    storyDialog.find('#end-button').show();
   }
 
   // TODO: when moving backwards (ie. resetting), remove custom effect classes
@@ -163,10 +169,32 @@ function checkLevelEnd() {
     }
   });
   if (cellCountDigged > cellCountTotal*0.6) {
-    console.log('===Level end===');
-    resetDigMap();
-    currentLevel++;
-    loadLevel(currentLevel);
+    if (currentLevel === 5) {
+      console.log('ending game');
+
+      $('<div>').addClass('tentacle t1').appendTo(wrapperEl);
+      $('<div>').addClass('tentacle t2').appendTo(wrapperEl);
+      $('<div>').addClass('tentacle t3').appendTo(wrapperEl);
+
+      setTimeout(function() {
+        $('<div>').addClass('tentacle-big').appendTo(wrapperEl);
+      }, 3000);
+      setTimeout(function() {
+        screamSound.play();
+      }, 5000);
+      setTimeout(function() {
+        const endDialog = $('<div>').appendTo($('#game-area')).addClass('end-dialog');
+        $('<div>').addClass('end-title').text('The Dig').appendTo(endDialog);
+      }, 7000);
+      setTimeout(function() {
+        $('<div>').addClass('end-subtitle').text('A Ludum Dare 57 entry by ditam').appendTo(endDialog);
+      }, 9000);
+    } else {
+      console.log('===Level end===');
+      resetDigMap();
+      currentLevel++;
+      loadLevel(currentLevel);
+    }
   }
 }
 
@@ -194,7 +222,7 @@ function revealCell(x, y) {
 }
 
 let songs, sounds, humSound;
-let clickSound, digSound, errorSound;
+let clickSound, digSound, errorSound, screamSound;
 
 $(document).ready(function() {
   songs = [
@@ -211,6 +239,7 @@ $(document).ready(function() {
     clickSound,
     digSound,
     errorSound,
+    screamSound,
   ];
 
   humSound = new Audio('assets/hum.mp3');
