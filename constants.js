@@ -4,7 +4,7 @@ const params = {
   GRID_ROWS: 15,
   GRID_COLS: 20,
   WORKER_SIZE: 25, // match in CSS!
-  WORKER_EFFECT_RADIUS: 4,
+  WORKER_EFFECT_RADIUS: 3, // initial - upg can increase
   WORKER_LOCK_TIME: 3000, // consider animation speed
 };
 

@@ -48,15 +48,39 @@ body {
   background-size: contain;
   background-color: #8c5151;
 }
-#worker-list .label {
+
+#worker-list .worker.dead .portrait {
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
+
+#worker-list .worker .label-container {
+  position: relative;
+}
+#worker-list .worker .label {
+  position: relative;
   line-height: 20px;
   font-size: 16px;
   text-align: center;
   color: black;
 }
+#worker-list .worker .label-bg {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: rgb(88, 88, 101);
+}
 
-#worker-list .worker.active .label {
+#worker-list .worker.active .label-bg {
   background-color: rgb(71, 71, 175);
+}
+
+
+#score-display {
+  position: absolute;
+  right: 160px;
+  top: 60px;
+  font-size: 48px;
 }
 
 #main-wrapper {
@@ -101,6 +125,10 @@ body {
   transition-property: top, left;
   transition-duration: 2s;
   transition-timing-function: ease-in-out;
+}
+
+.worker-marker.hidden {
+  display: none;
 }
 
 .worker-marker.active {
@@ -194,6 +222,7 @@ body {
 #choices div {
   display: inline-block;
   padding: 16px;
+  border-radius: 3px;
 }
 
 #choices div:hover {
@@ -217,6 +246,14 @@ body {
   font-size: 32px;
 }
 
+.end-dialog .end-score {
+  position: absolute;
+  top: 1000px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+}
+
 .end-dialog .end-title {
   text-align: center;
   padding-top: 400px;
@@ -227,4 +264,134 @@ body {
   text-align: center;
   padding-top: 100px;
   font-size: 32px;
+}
+
+#end-level-dialog {
+  display: none;
+  border: 2px solid #8c5151;
+  background-color: #c3b28b;
+  border-radius: 5px;
+  position: absolute;
+  width: 1280px;
+  top: 300px;
+  left: 320px;
+  font-size: 36px;
+  padding: 12px;
+  line-height: 42px;
+}
+
+#resources-list {
+  padding-left: 16px;
+  margin: 12px 0;
+}
+
+#end-level-dialog #header {
+  text-align: center;
+  margin: 16px 0;
+}
+
+#end-level-dialog #special-msg {
+  color: #843232;
+  text-align: center;
+}
+
+#end-level-dialog .resource {
+  display: inline-block;
+
+  /* necessary for the :after styling */
+  position: relative;
+  z-index: 0;
+}
+
+#end-level-dialog .resource.basic {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #68331c;
+  background-color: #e5c798;
+}
+#end-level-dialog .resource.rare {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #68331c;
+  background-color: gray;
+}
+#end-level-dialog .resource.triangle {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+#end-level-dialog .resource.triangle:after {
+  content: '';
+  border-left: 28px solid transparent;
+  border-right: 28px solid transparent;
+  border-top: 46px solid #a4519e;
+
+  position: absolute;
+  left: -21px;
+  top: 0px;
+  z-index: -1;
+
+  /* using a filter so that the transparent shape is respected */
+  filter: drop-shadow(5px 3px 7px #fff);
+}
+
+#end-level-dialog .value-marker {
+  font-size: 24px;
+  color: gray;
+}
+
+#end-level-dialog #level-total {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  margin-right: 28px;
+}
+
+
+#end-level-dialog #daily-total {
+  text-align: right;
+  padding-top: 12px;
+  margin: 12px 18px;
+  border-top: 1px solid gray;
+}
+
+#upgrades-list .upgrade {
+  position: relative;
+  padding-left: 16px;
+}
+
+#upgrades-list .upgrade:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#upgrades-list {
+  margin-top: 12px;
+}
+
+#upgrades-list .cost {
+  display: inline-block;
+  position: absolute;
+  right: 18px;
+  color: gray;
+}
+
+#upgrades-list .upgrade.selected .cost {
+  color: black;
+}
+
+#end-level-dialog .footer {
+  text-align: right;
+  line-height: 16px;
+  margin: 2px;
+}
+
+#end-level-dialog .footer span {
+  display: inline-block;
+  padding: 16px;
+  border-radius: 3px;
+}
+
+#end-level-dialog .footer span:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
 }

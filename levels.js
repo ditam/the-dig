@@ -8,17 +8,23 @@ const levels = [
   },
   {
     bgAsset: 'assets/bg-3.png',
+    onEnd: (context) => {
+      return `Falling rocks have crushed ${context.workers[0].name}. He is dead.`;
+    }
   },
   {
     onLoad: (context) => {
       $('#game-area').addClass('darkened');
       if (context.humSound) {
-        context.humSound.volume = 0.3;
+        context.humSound.volume = 0.4;
         context.humSound.play();
       }
       if (context.workers) {
-        context.workers[2].dead = true;
-        $('#worker-3').remove();
+        // NB: if we kill the last worker, the previous level onEnd can't reference by name
+        // (new worker might have been hired)
+        context.workers[0].dead = true;
+        const workerSelector = '#worker-1';
+        $(workerSelector).remove();
         context.updateWorkers();
       }
     },
@@ -28,7 +34,7 @@ const levels = [
     onLoad: (context) => {
       $('#game-area').addClass('darkened');
       if (context.humSound) {
-        context.humSound.volume = 0.4;
+        context.humSound.volume = 0.5;
       }
     },
     bgAsset: 'assets/bg-5.png',
@@ -37,7 +43,7 @@ const levels = [
     onLoad: (context) => {
       $('#game-area').removeClass('darkened').addClass('darkened-2');
       if (context.humSound) {
-        context.humSound.volume = 0.5;
+        context.humSound.volume = 0.6;
       }
       if (context.songs) {
         context.songs[0].pause();

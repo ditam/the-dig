@@ -19,15 +19,55 @@
     <div id="toolbar">
       <div id="worker-list">
       </div>
-      <div id="resource-list">
+      <div id="score-display">
+      Score: 0
       </div>
     </div>
     <div id="main-wrapper">
       <img class="bg" id="bg-before" />
       <img class="bg clipped" id="bg-after" />
       <div class="worker-marker" id="worker-1"></div>
-      <div class="worker-marker" id="worker-2"></div>
-      <div class="worker-marker" id="worker-3"></div>
+      <div class="worker-marker hidden" id="worker-2"></div>
+      <div class="worker-marker hidden" id="worker-3"></div>
+    </div>
+  </div>
+
+  <div id="end-level-dialog">
+    <div id="header">End of day X</div>
+    <div id="special-msg"></div>
+    <div>Resources collected</div>
+    <div id="resources-list">
+      <span id="count-1">...</span>
+      <div class="resource basic"></div>
+      <span class="value-marker">x 100</span>
+      <span id="count-2">...</span>
+      <div class="resource rare"></div>
+      <span class="value-marker">x 500</span>
+      <span id="count-3">...</span>
+      <div class="resource triangle">?</div>
+      <span class="value-marker">x 2000</span>
+      <span id="level-total">sum</span>
+    </div>
+    <div>Upgrades</div>
+    <div id="upgrades-list">
+      <div class="upgrade" id="upg-slot-1">
+        <span class="name">upg1r</span>
+        <span class="cost">-5000</span>
+      </div>
+      <div class="upgrade" id="upg-slot-2">
+        <span class="name">upg2</span>
+        <span class="cost">-5000</span>
+      </div>
+      <div class="upgrade" id="upg-slot-3">
+        <span class="name">upg3</span>
+        <span class="cost">-5000</span>
+      </div>
+    </div>
+    <div id="daily-total">
+      <span class="cost">sum</span>
+    </div>
+    <div class="footer">
+      <span class="button">Continue</span>
     </div>
   </div>
 
