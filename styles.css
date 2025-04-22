@@ -359,7 +359,12 @@ body {
   padding-left: 16px;
 }
 
-#upgrades-list .upgrade:hover {
+#upgrades-list .upgrade:not(.available) {
+  color: gray;
+  cursor: not-allowed;
+}
+
+#upgrades-list .upgrade.available:hover {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.2);
 }

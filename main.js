@@ -317,6 +317,9 @@ function endLevel() {
       $(selector).removeClass('hidden');
       renderWorkerPortraits();
       updateWorkerPosInDOM();
+      if (workers.length === 3) {
+        $('#upg-slot-1').removeClass('available');
+      }
     } else if (upId === 'increase-radius') {
       digRadius++;
       console.log('-- increased dig radius to ', digRadius);
@@ -337,7 +340,7 @@ function endLevel() {
   }
 
   // FIXME: do not re-add handlers on each level
-  endLevelDialog.on('click', '.upgrade', function() {
+  endLevelDialog.on('click', '.upgrade.available', function() {
     const selectedUpgrade = $(this);
     if (totalScore + dailyResSum < genericUpgradeCost) {
       // disallow selecting if can't afford
